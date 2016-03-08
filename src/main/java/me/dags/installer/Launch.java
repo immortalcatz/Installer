@@ -2,7 +2,7 @@ package me.dags.installer;
 
 import com.google.gson.Gson;
 import me.dags.installer.github.GithubRateLimit;
-import me.dags.installer.ui.InstallerPane;
+import me.dags.installer.install.InstallerPane;
 
 import javax.swing.*;
 import java.awt.*;

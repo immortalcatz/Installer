@@ -1,4 +1,4 @@
-package me.dags.installer.ui;
+package me.dags.installer.install;
 
 import javax.swing.JPanel;
 

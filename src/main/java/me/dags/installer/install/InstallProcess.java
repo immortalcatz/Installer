@@ -1,8 +1,9 @@
-package me.dags.installer;
+package me.dags.installer.install;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import me.dags.installer.Installer;
 import me.dags.installer.github.GithubTag;
 
 import javax.swing.*;

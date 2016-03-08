@@ -1,4 +1,4 @@
-package me.dags.installer.ui;
+package me.dags.installer.install;
 
 import me.dags.installer.Installer;
 import me.dags.installer.Versions;

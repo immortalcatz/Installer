@@ -1,6 +1,5 @@
-package me.dags.installer.ui;
+package me.dags.installer.install;
 
-import me.dags.installer.InstallProcess;
 import me.dags.installer.Installer;
 import me.dags.installer.github.GithubTag;
 
@@ -68,12 +67,14 @@ public class Install extends Action
                 Installer.log("[DOWNLOAD] Download attempt {}", attempts++);
                 try
                 {
+                    progressBar.setString(null);
                     installProcess.download(tag.get(), progressBar);
                     break;
                 }
                 catch (Throwable t)
                 {
                     Installer.log("[DOWNLOAD] Error occurred whilst downloading: {}", t.getMessage());
+                    progressBar.setString("Download attempt: " + attempts);
                     Thread.sleep(1000);
                 }
                 if (attempts == 5)
