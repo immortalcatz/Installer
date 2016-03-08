@@ -1,9 +1,9 @@
 {
-  "profile_name": "profile name",
-  "target_dir": "install folder",
+  "profile_name": "my_sweet_modpack",
+  "target_dir": "profiles",
   "minecraft_version": "1.8.8",
   "github": {
-    "repository": "user/Repository",
+    "repository": "dags-/TestModpack",
     "api" : "https://api.github.com"
   }
 }
