@@ -1,0 +1,9 @@
+{
+  "profile_name": "profile name",
+  "target_dir": "install folder",
+  "minecraft_version": "1.8.8",
+  "github": {
+    "repository": "user/Repository",
+    "api" : "https://api.github.com"
+  }
+}
