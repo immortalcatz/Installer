@@ -7,7 +7,7 @@ public class Properties
     public String profile_name = "";
     public String target_dir = "";
     public String minecraft_version = "";
-    private GithubProperties github = new GithubProperties();
+    public GithubProperties github = new GithubProperties();
 
     public transient File mcDir = new File("");
 
@@ -36,8 +36,8 @@ public class Properties
 
     public static class GithubProperties
     {
-        private String api = "https://api.github.com/";
-        private String repository = "dags-/ArdaCraftBlocks";
+        public String api = "https://api.github.com/";
+        public String repository = "dags-/ArdaCraftBlocks";
 
         @Override
         public String toString()

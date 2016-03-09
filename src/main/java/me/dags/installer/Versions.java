@@ -1,15 +1,15 @@
 package me.dags.installer;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * @author dags <dags@dags.me>
@@ -21,7 +21,7 @@ public class Versions
 
     public Versions()
     {
-        File versionsDir = new File(Installer.profile().mcDir, "versions");
+        File versionsDir = new File(Installer.properties().mcDir, "versions");
         if (!versionsDir.exists())
         {
             return;
@@ -53,7 +53,7 @@ public class Versions
         {
             return;
         }
-        String targetVersion = Installer.profile().minecraft_version;
+        String targetVersion = Installer.properties().minecraft_version;
         for (File file : files)
         {
             if (file.isDirectory())

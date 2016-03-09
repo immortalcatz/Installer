@@ -1,15 +1,21 @@
 package me.dags.installer;
 
-import com.google.gson.Gson;
-import me.dags.installer.github.GithubRateLimit;
-import me.dags.installer.install.InstallerPane;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridBagLayout;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+
+import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.WindowConstants;
+
+import com.google.gson.Gson;
+
+import me.dags.installer.github.GithubRateLimit;
 
 public class Launch
 {
@@ -18,10 +24,11 @@ public class Launch
         InputStream inputStream = Launch.class.getResourceAsStream("/properties.json");
         Properties properties = new Gson().fromJson(new InputStreamReader(inputStream), Properties.class);
         Installer.applyProperties(properties);
-        Installer.log("Loaded properties: {}", properties);
+        Installer.phase("startup").log("Loaded properties: {}", properties);
+        Installer.logMessage("System information:{}", systemInformation());
 
         // Liteloader Installer
-        String userHomeDir = System.getProperty("user.home", ".");
+        String userHome = System.getProperty("user.home", ".");
         String osType = System.getProperty("os.name").toLowerCase(Locale.ENGLISH);
         File mcDir;
         String mcDirName = ".minecraft";
@@ -31,23 +38,23 @@ public class Launch
         }
         else if (osType.contains("mac"))
         {
-            mcDir = new File(new File(new File(userHomeDir, "Library"), "Application Support"), "minecraft");
+            mcDir = new File(new File(new File(userHome, "Library"), "Application Support"), "minecraft");
         }
         else
         {
-            mcDir = new File(userHomeDir, mcDirName);
+            mcDir = new File(userHome, mcDirName);
         }
         //
 
-        Installer.profile().mcDir = mcDir;
+        Installer.properties().mcDir = mcDir;
+        Installer.logMessage("Set minecraft home dir to {}", mcDir);
 
         try
         {
-            GithubRateLimit.printLimit();
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             JFrame frame = new JFrame();
             frame.setLayout(new GridBagLayout());
-            frame.add(new InstallerPane());
+            frame.add(new InstallerPanel());
             frame.pack();
             frame.setLocationRelativeTo(null);
             frame.setResizable(false);
@@ -58,5 +65,32 @@ public class Launch
         {
             e.printStackTrace();
         }
+    }
+
+    private static String systemInformation()
+    {
+        List<String> lines = new ArrayList<>();
+        lines.add("Java Version: " + System.getProperty("java.version"));
+        lines.add("Java Home: " + System.getProperty("java.home"));
+
+        lines.add("OS Name: " + System.getProperty("os.name"));
+        lines.add("OS Version: " + System.getProperty("os.version"));
+        lines.add("OS Architecture: " + System.getProperty("os.arch"));
+
+        Optional<GithubRateLimit> rateLimit = GithubRateLimit.getLimit();
+        if (rateLimit.isPresent())
+        {
+            lines.add("Github API Calls Remaining: " + rateLimit.get().rate.remaining);
+            lines.add("Github API Calls Limit: " + rateLimit.get().rate.limit);
+            lines.add("Github API Reset Date: " + rateLimit.get().rate.resetDate());;
+        }
+        else
+        {
+            lines.add("Github API: NO CONNECTION! THIS IS BAD!");
+        }
+
+        StringBuilder sb = new StringBuilder("\n");
+        lines.forEach(s -> sb.append(sb.length() > 0 ? "\n" : "").append(s));
+        return sb.append("\n").toString();
     }
 }

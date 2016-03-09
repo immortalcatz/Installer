@@ -13,6 +13,7 @@ public class Installer
     private final FileWriter filewriter;
     private final StringBuffer buffer = new StringBuffer();
     private Properties properties = new Properties();
+    private String phase = "[STARTUP]";
 
     public Installer()
     {
@@ -31,6 +32,12 @@ public class Installer
         this.filewriter = filewriter;
     }
 
+    public static Installer phase(String phase)
+    {
+        instance.phase = "[" + phase.toUpperCase() + "]";
+        return instance;
+    }
+
     public static void applyProperties(Properties properties)
     {
         if (properties == null)
@@ -40,7 +47,7 @@ public class Installer
         instance.properties = properties;
     }
 
-    public static Properties profile()
+    public static Properties properties()
     {
         return instance.properties;
     }
@@ -50,9 +57,14 @@ public class Installer
         return instance.buffer.toString();
     }
 
-    public static void log(String message, Object...args)
+    public static void logMessage(String message, Object...args)
     {
-        String log = format(message, args);
+        instance.log(message, args);
+    }
+
+    public void log(String message, Object...args)
+    {
+        String log = instance.phase + " " + format(message, args);
         instance.logger.info(log);
         instance.buffer.append(log).append('\n');
         try
