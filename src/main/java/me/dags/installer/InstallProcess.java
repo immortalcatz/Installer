@@ -85,7 +85,6 @@ public class InstallProcess extends JPanel implements Runnable
                 String version = tag.get().name;
                 String dirName = (name + "-" + version).replaceAll("^A-Za-z0-9\\.\\-\\_", "");
                 targetDir = new File(targetDir, dirName.toLowerCase());
-                targetDir.mkdirs();
             }
 
             String format = "%s/" + (createProfile ? "4" : "3") + " %s";
