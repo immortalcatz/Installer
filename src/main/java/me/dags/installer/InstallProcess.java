@@ -37,9 +37,10 @@ public class InstallProcess extends JPanel implements Runnable
     private final String forgeProfile;
     private final boolean createProfile;
 
-    private final File targetDir;
     private final File tempDir;
     private final File tempFile;
+
+    private File targetDir;
 
     public InstallProcess(JFrame parent, JButton ok, File targetDir, String forgeProfile)
     {
@@ -51,9 +52,9 @@ public class InstallProcess extends JPanel implements Runnable
         this.add(progress);
         this.forgeProfile = forgeProfile;
         this.createProfile = !forgeProfile.isEmpty();
-        this.targetDir = targetDir;
         this.tempDir = new File(targetDir, "temp_" + System.currentTimeMillis());
         this.tempFile = new File(tempDir, System.currentTimeMillis() + ".zip");
+        this.targetDir = targetDir;
     }
 
     public void perform()
@@ -77,8 +78,17 @@ public class InstallProcess extends JPanel implements Runnable
                 ok.setText("Done!");
                 return;
             }
-            String format = "%s/" + (createProfile ? "4" : "3") + " %s";
 
+            if (!targetDir.equals(Installer.properties().mcDir))
+            {
+                String name = Installer.properties().profile_name;
+                String version = tag.get().name;
+                String dirName = (name + "-" + version).replaceAll("^A-Za-z0-9\\.\\-\\_", "");
+                targetDir = new File(targetDir, dirName.toLowerCase());
+                targetDir.mkdirs();
+            }
+
+            String format = "%s/" + (createProfile ? "4" : "3") + " %s";
             progress.setString(String.format(format, 1, "Downloading..."));
             Thread.sleep(1000);
             progress.setString(null);
