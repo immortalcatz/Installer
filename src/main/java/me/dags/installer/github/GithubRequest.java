@@ -23,7 +23,7 @@ public class GithubRequest
         catch (IOException e)
         {
             e.printStackTrace();
-            Installer.log("IOException:\n{}", e.getMessage());
+            Installer.phase("request error").log("IOException:\n{}", e.getMessage());
         }
         return Optional.empty();
     }

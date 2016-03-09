@@ -7,41 +7,35 @@ import me.dags.installer.Installer;
 
 public class GithubRateLimit
 {
-    private Resources resources = new Resources();
-    private Data rate = new Data();
+    public Resources resources = new Resources();
+    public Data rate = new Data();
 
     public static class Resources
     {
-        private Data core = new Data();
-        private Data search = new Data();
+        public Data core = new Data();
+        public Data search = new Data();
     }
 
     public static class Data
     {
-        private String limit = "";
-        private String remaining = "";
-        private String reset = "";
+        public String limit = "";
+        public String remaining = "";
+        public String reset = "";
+
+        public String resetDate()
+        {
+            return new Date(Long.valueOf(reset) * 1000).toString();
+        }
 
         @Override
         public String toString()
         {
-            return "remaining=" + remaining + ",limit=" + limit + ",reset=" + new Date(Long.valueOf(reset) * 1000);
-        }
-    }
-
-    public static void printLimit()
-    {
-        Installer.log("Checking API rate limit...");
-
-        Optional<GithubRateLimit> limit = getLimit();
-        if (limit.isPresent())
-        {
-            Installer.log(limit.get().rate.toString());
+            return "remaining=" + remaining + ",limit=" + limit + ",reset=" + resetDate();
         }
     }
 
     public static Optional<GithubRateLimit> getLimit()
     {
-        return GithubRequest.get(Installer.profile().getRateLimitQuery(), GithubRateLimit.class);
+        return GithubRequest.get(Installer.properties().getRateLimitQuery(), GithubRateLimit.class);
     }
 }

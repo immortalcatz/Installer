@@ -1,12 +1,8 @@
 package me.dags.installer.github;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Optional;
-
-import com.google.gson.Gson;
 
 import me.dags.installer.Installer;
 
@@ -60,7 +56,7 @@ public class GithubTag
 
     public static Optional<GithubTag> getLatest()
     {
-        Optional<GithubTag[]> tags = GithubRequest.get(Installer.profile().getTagsQuery(), GithubTag[].class);
+        Optional<GithubTag[]> tags = GithubRequest.get(Installer.properties().getTagsQuery(), GithubTag[].class);
         if (tags.isPresent() && tags.get().length > 0)
         {
             return Optional.of(tags.get()[0]);
