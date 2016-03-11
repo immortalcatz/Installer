@@ -14,8 +14,8 @@ There are two components to a modpack:
 2. The installer, which is set up to download and install from the repository
 
 ## The Repository
-The github repository should be structured such that it's root mimics the 
-`.minecraft/` directory, so would typically look like:  
+The github repository should be structured similarly to the `.minecraft/` directory,
+ so would typically look like:  
 ```
 /config/mod_a.cfg
 /config/mod_b.cfg
