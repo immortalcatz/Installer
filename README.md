@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/dags-/Installer.svg?branch=master)](https://travis-ci.org/dags-/Installer)
+
 For Users
 ====
 1. Install a Forge Modloader profile using the official Forge Installer
