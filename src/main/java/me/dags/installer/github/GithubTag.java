@@ -8,7 +8,7 @@ import me.dags.installer.Installer;
 
 public class GithubTag
 {
-    private String name = "";
+    public String name = "";
     private String zipball_url = "";
     private String tarball_url = "";
     private Commit commit = new Commit();
