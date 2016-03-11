@@ -5,9 +5,9 @@ script:
   - mvn install
 deploy:
   provider: releases
-  file_glob: true
   api_key: '$GITHUB_API_KEY'
-  file: "target/*-SNAPSHOT.jar"
+  file: "target/*.jar"
+  file_glob: true
   skip_cleanup: true
   on:
     tags: true
