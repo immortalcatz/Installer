@@ -12,7 +12,7 @@ deploy:
   on:
     branch: master
 after_success:
-  - for filename in "$TRAVIS_BUILD_DIR"; do echo "file: $filename" done
+  - ls
   - git config --global user.name "Travis CI"
   - export GIT_TAG=$TRAVIS_JOB_ID-$TRAVIS_BUILD_NUMBER
   - git tag $GIT_TAG -a -m "Generated tag from TravisCI build $TRAVIS_BUILD_NUMBER"
