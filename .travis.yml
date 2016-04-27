@@ -3,20 +3,16 @@ jdk:
  - oraclejdk8
 script:
   - mvn install
-before_deploy:
-  - git config --global user.email "builds@travis-ci.com"
-  - git config --global user.name "Travis CI"
-  - export GIT_TAG=$TRAVIS_BRANCH-v0.1.$TRAVIS_BUILD_NUMBER
-  - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
-  - git push -q https://$GITHUB_API_KEY@github.com/dags-/Installer--tags
 deploy:
   provider: releases
   api_key: '$GITHUB_API_KEY'
-  file: "target/*.jar"
+  file: "target/Installer*.jar"
   file_glob: true
   skip_cleanup: true
   on:
-    tags: false
-branches:
-  except:
-    - /^*-v[0-9]/
+    branch: master
+after_success:
+  - git config --global user.name "Travis CI"
+  - export GIT_TAG=$TRAVIS_JOB_ID-$TRAVIS_BUILD_NUMBER
+  - git tag $GIT_TAG -a -m "Generated tag from TravisCI build $TRAVIS_BUILD_NUMBER"
+  - git push origin $GIT_TAG
