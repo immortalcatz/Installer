@@ -12,8 +12,8 @@ deploy:
   on:
     branch: master
 after_success:
-  - ls target/
-  - echo target/Installer*.jar
+  - tag=$(basename target/Installer*.jar .jar)
+  - echo tag
   - git config --global user.name "Travis CI"
   - export GIT_TAG=$TRAVIS_JOB_ID-$TRAVIS_BUILD_NUMBER
   - git tag $GIT_TAG -a -m "Generated tag from TravisCI build $TRAVIS_BUILD_NUMBER"
